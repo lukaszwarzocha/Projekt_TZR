@@ -97,9 +97,3 @@ print(tabela.head(5))
 # Zapis wyniku do baza.xlsx
 # with pd.ExcelWriter(path, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
 #   df.to_excel(writer, sheet_name='A3_Jakość_powietrza', startrow=2, startcol=0, header=False, index=False)
-
-# Interpretacja wyników dla pierwszych 5 wierszy:
-# System rozmyty polegający na ocenie jakości powietrza, patrząc na pierwsze 5 wierszy 1,2 i 3 indeks charakteryzuje się wysokim współczynnikiem
-# FIS >50 oraz kategorią lingwistyczną (niskie), wartość współczynnika FIS świadczy o tym, że pomimo danej wartości pyłu jakość powietrza jest dobra.
-# Indeks 2 o kategorii (umiarkowane) oraz PM2.5 = 59.8 cechuje współczynnik FIS na poziomie <50, natomiast indeks o PM2.5 = 75.9 oraz kategorii (wysokie)
-# to wartość FIS około 22, czyli o wiele niższa niż poprzednie. Im niższa wartość FIS tym jakość powietrza jest gorsza, im wyższa tym jakość powietrza jest lepsza.
