@@ -18,9 +18,9 @@ Projekt realizuje **Temat A3** dotyczącego **oceny jakości powietrza** na pods
 
 Dla każdej wartości PM2.5 program ma zwrócić **jedną liczbę z zakresu [0, 100]** reprezentującą jakość powietrza, gdzie **wysokie liczby oznaczają lepsze powietrze** (0 = bardzo złe, 100 = idealne). Konkretnie:
 
-- Niskie stężenia (PM < ~15) powinny dawać wynik bliski 80-100 czyli powietrze dobrej jakości
-- Średnie stężenia (PM ~30-60) powinny dawać wynik w okolicy 40-60 czyli jakość umiarkowana
-- Wysokie stężenia (PM > ~80) powinny dawać wynik 15-25 czyli powietrze złej jakości
+- Niskie stężenia (PM < ~50) dają wynik bliski +50-100 czyli powietrze dobrej jakości
+- Średnie stężenia (PM ~50-~72) powinny dawać wynik w okolicy 35-50 czyli jakość umiarkowana
+- Wysokie stężenia (PM > ~72) powinny dawać wynik 0-30 czyli powietrze złej jakości
 
 Drugim oczekiwaniem jest, by wynik modelu był w większości **zgodny z etykietą lingwistyczną** z bazy.
 
@@ -36,7 +36,7 @@ Trzy zbiory pokrywające skalę 0-150 μg/m³, wszystkie zaimplementowane przez 
 | średnie | `trimf(PM, 15, 45, 75)` | PM = 45 |
 | wysokie | `trimf(PM, 50, 150, 250)` | PM = 150 |
 
-Zbiory **zachodzą na siebie parami**: niskie i średnie zachodzą w okolicy PM=15-35, średnie i wysokie w okolicy PM=50-75. Dzięki temu przejścia są płynne, a wartości graniczne (np. PM=27) aktywują jednocześnie dwie reguły.
+Zbiory **zachodzą na siebie parami**: niskie i średnie zachodzą w okolicy PM=30-35, średnie i wysokie w okolicy PM=50-75. Dzięki temu przejścia są płynne, a wartości graniczne (np. PM=27) aktywują jednocześnie dwie reguły.
 
 ### Wyjście - jakość [0, 100]
 
@@ -118,9 +118,9 @@ Pierwsze 5 wierszy bazy po obliczeniach:
 
 ### Interpretacja przypadków testowych
 
-**Wiersz 3 (PM=5.5 -> 82.9):** bardzo niskie zanieczyszczenie. Aktywna jest niemal wyłącznie reguła R1 (niskie -> dobra) z wysoką aktywacją. Wynik bliski centroidu zbioru *dobra* (~83). Interpretacja lingwistyczna: powietrze dobrej jakości - zgodne z etykietą bazy.
+**Wiersz 3 (PM=5.5 -> 82.9):** bardzo niskie zanieczyszczenie. Aktywna jest niemal wyłącznie reguła R1 (niskie -> dobra) z wysoką aktywacją. Interpretacja lingwistyczna: powietrze dobrej jakości.
 
-**Wiersz 5 (PM=75.9 -> 22.0):** silne zanieczyszczenie. Dominuje reguła R3 (wysokie -> zła), R2 wnosi niewielki wkład. Wynik blisko centroidu zbioru *zła* (~17). Interpretacja: powietrze złej jakości - zgodne z etykietą bazy.
+**Wiersz 5 (PM=75.9 -> 22.0):** silne zanieczyszczenie. Dominuje reguła R3 (wysokie -> zła), R2 wnosi niewielki wkład. Interpretacja: powietrze złej jakości.
 
 **Wiersz 2 (PM=59.8 -> 49.7):** wartość pośrednia. Aktywują się jednocześnie R2 (średnie) z aktywacją 0.51 oraz R3 (wysokie) z aktywacją 0.20. Centroid wypada w okolicy środka skali, lekko pod 50, ponieważ R3 dociąga wynik w stronę niskich wartości. 
 
